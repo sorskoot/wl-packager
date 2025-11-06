@@ -8,6 +8,9 @@ on:
             config:
                 required: true
                 type: string
+        secrets:
+            WLE_CREDENTIALS:
+                required: true
 jobs:
     package:
         runs-on: ubuntu-latest
