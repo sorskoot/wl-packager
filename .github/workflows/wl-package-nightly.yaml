@@ -27,3 +27,8 @@ jobs:
               run: /usr/local/bin/entrypoint.sh WonderlandEditor --windowless --enable-plugins --package --project ${{ inputs.project }} --config ${{ inputs.config }} --output ./deploy
               env:
                   WLE_CREDENTIALS: ${{ secrets.WLE_CREDENTIALS }}
+            - name: Upload packaged build
+              uses: actions/upload-artifact@v4
+              with:
+                  name: deploy
+                  path: ./deploy
