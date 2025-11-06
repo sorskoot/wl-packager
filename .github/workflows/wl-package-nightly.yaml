@@ -1,0 +1,26 @@
+# .github/workflows/wl-package-nightly.yaml
+on:
+    workflow_call:
+        inputs:
+            project:
+                required: true
+                type: string
+            config:
+                required: true
+                type: string
+jobs:
+    package:
+        runs-on: ubuntu-latest
+        container:
+            image: wonderlandengine/editor:edge
+        steps:
+            - name: Install Git
+              run: apt-get update && apt-get install -y git
+            - name: Checkout repository and submodules
+              uses: actions/checkout@v4
+            - name: npm install
+              run: npm i
+            - name: Package
+              run: /usr/local/bin/entrypoint.sh WonderlandEditor --windowless --enable-plugins --package --project ${{ inputs.project }} --config ${{ inputs.config }} --output ./deploy
+              env:
+                  WLE_CREDENTIALS: ${{ secrets.WLE_CREDENTIALS }}
